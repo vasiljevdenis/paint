@@ -2,14 +2,14 @@ import React from 'react'
 
 function Navbar() {
   return (
-    <div className="container-fluid">
+    <header>
         <nav className="navbar navbar-expand-md bg-body-tertiary" role="navigation">
-            <div className="container-fluid ps-lg-5 pe-lg-5" style="height: 30vh;">
-                <a className="navbar-brand order-2 order-md-1" href="/"><img src="" alt="Логотип" className="w-100"
-                        style="max-width: 150px;" /></a>
+            <div className="container-fluid ps-lg-5 pe-lg-5">
+                <a className="navbar-brand order-2 order-md-1" href="/"><img src="images/logo.png" alt="Логотип" className="w-100"
+                        style={{maxWidth: '300px'}} /></a>
                 <button className="navbar-toggler order-1 order-md-2 border-0" type="button"
                     data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                    <img src="" alt="Иконка меню" />
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div className="offcanvas offcanvas-start order-md-2" tabindex="-1" id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel">
@@ -20,14 +20,17 @@ function Navbar() {
                     <div className="offcanvas-body">
                         <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li className="nav-item">
-                                <a className="nav-link active" href="#about-agency">Link</a>
+                                <a className="nav-link" href="#">Dota 2</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">CS:GO</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </nav>
-    </div>
+        </header>
   )
 }
 export default Navbar;

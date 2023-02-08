@@ -1,8 +1,12 @@
 // Fonts
-@import url('https://fonts.bunny.net/css?family=Nunito');
+@import 'fonts';
 
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+body {
+font-family: 'Roboto', sans-serif;
+}
