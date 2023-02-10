@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/sass/app.scss',
                 'resources/js/app.js',
                 'resources/js/home.js',
+                'resources/js/canvas.js'
             ],
             refresh: true,
         }),
