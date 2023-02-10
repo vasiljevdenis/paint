@@ -18,6 +18,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "bootstrap-icons": "^1.10.3",
         "fabric": "^5.3.0",
         "mobx": "^6.7.0",
         "mobx-react-lite": "^3.4.0",

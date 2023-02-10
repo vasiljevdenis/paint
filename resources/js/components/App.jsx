@@ -1,15 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Navbar from './Navbar';
+import Toolbar from './Toolbar';
 import Canvas from './Canvas';
-import Preview from './Preview';
+import Download from './Download';
 import Footer from './Footer';
 
 function App() {
     return (        
         <>
         <Navbar />
-        <Preview />
+        <main>
+        <div className="container-fluid" style={{height: '80vh'}}>
+            <div className="row h-100">
+                <Toolbar />
+                <Canvas />
+                <Download />
+            </div>
+        </div>
+        </main>
         <Footer />
         </>
     );

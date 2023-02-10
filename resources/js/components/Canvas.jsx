@@ -1,8 +1,11 @@
 import React from 'react'
 
- function Canvas() {
+  const Canvas = () => {
   return (
-    <canvas></canvas>
+    <div className="col-12 col-md-8 d-flex">
+      <canvas className='m-auto' width={600} height={600}/>
+    </div>
+    
   )
 }
 export default Canvas;

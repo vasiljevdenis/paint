@@ -7,6 +7,24 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
+@import 'bootstrap-icons/font/bootstrap-icons.css'; 
+
 body {
 font-family: 'Roboto', sans-serif;
+}
+
+.btn-custom {
+    border-radius: 10px;
+    background: #fff;
+    min-width: 100px;
+    color: #212529;
+    text-align: center;
+    border-right: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+}
+
+.btn-custom:hover {
+    opacity: .85;
+    color: rgba(33, 37, 41, .85);
 }
