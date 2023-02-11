@@ -19,12 +19,15 @@ font-family: 'Roboto', sans-serif;
     min-width: 100px;
     color: #212529;
     text-align: center;
+    border-top: none;
+    border-left: none;
     border-right: 2px solid #ccc;
     border-bottom: 2px solid #ccc;
     outline: none;
 }
 
-.btn-custom:hover {
+.btn-custom:hover,
+.btn-custom:focus {
     opacity: .85;
     color: rgba(33, 37, 41, .85);
 }

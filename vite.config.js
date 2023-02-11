@@ -7,6 +7,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/sass/app.scss',
+                'resources/sass/canvas.scss',
                 'resources/js/app.js',
                 'resources/js/home.js',
                 'resources/js/canvas.js'

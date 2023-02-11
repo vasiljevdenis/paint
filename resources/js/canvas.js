@@ -1,9 +1,23 @@
+import './bootstrap';
 import { fabric } from "fabric";
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    let vh = document.documentElement.clientHeight / 100;
+    document.querySelector('canvas').width = vh * 78;
+    document.querySelector('canvas').height = vh * 78;
+    
     let canvas = new fabric.Canvas('canvas');
-    canvas.setBackgroundImage('/images/dota.jpg', canvas.renderAll.bind(canvas));
-    let currentColor = "#000000";
+    // canvas.loadFromJSON();
+    fabric.Image.fromURL('/images/dota.jpg', function(img) {
+        img.scaleToWidth(canvas.width);
+        img.scaleToHeight(canvas.height);
+        canvas.setBackgroundImage(img);
+        canvas.requestRenderAll();
+     });
+    canvas.freeDrawingBrush.color = '#4079c2';
+    let currentColor = "#4079c2";
+    let currentWidth = 15;
 
     let tools = {
         cursor: document.querySelector('#cursor'),
@@ -14,28 +28,106 @@ document.addEventListener('DOMContentLoaded', function() {
         pencil: document.querySelector('#pencil'),
         text: document.querySelector('#text'),
         line: document.querySelector('#line'),
-        eraser: document.querySelector('#eraser'),
+        hexagon: document.querySelector('#hexagon'),
         bucket: document.querySelector('#bucket'),
         color: document.querySelector('#color'),
         remove: document.querySelector('#remove'),
         download: document.querySelector('#download'),        
-        url: document.querySelector('#url')        
+        url: document.querySelector('#url'),    
+        zoom: document.querySelector('#zoom'),
+        brushWidth: document.querySelector('#brush-width')
     };
+
+    let mainTools = document.querySelector('.toolbar .main-tools');
+    mainTools.addEventListener('click', function() {
+        if (!tools.brush.classList.contains('active')) {
+            if (!tools.brushWidth.parentNode.classList.contains('d-none')) {
+                tools.brushWidth.parentNode.classList.add('d-none')
+            }
+        } else {
+            if (tools.brushWidth.parentNode.classList.contains('d-none')) {
+                tools.brushWidth.parentNode.classList.remove('d-none')
+            }
+        }
+    });
+
+    canvas.on({
+        'mouse:down': function(options) {
+        if (options.target && tools.bucket.classList.contains('active')) {
+            if (options.target.type === "path") {
+                options.target.set("stroke", currentColor);
+            } else {
+            options.target.set("fill", currentColor).set("stroke", currentColor);        
+            }
+        }
+      }
+    });
 
     tools.cursor.addEventListener('click', function() {
         canvas.isDrawingMode = false;
+        if (!this.classList.contains('active')) {
+            this.classList.add('active');
+        }
+        if (tools.brush.classList.contains('active')) {
+            tools.brush.classList.remove('active');
+        }
+        if (tools.pencil.classList.contains('active')) {
+            tools.pencil.classList.remove('active');
+        }
+        if (tools.bucket.classList.contains('active')) {
+            tools.bucket.classList.remove('active');
+        }
+    });
+    tools.bucket.addEventListener('click', function() {
+        canvas.isDrawingMode = false;
+        if (!this.classList.contains('active')) {
+            this.classList.add('active');
+        }
+        if (tools.brush.classList.contains('active')) {
+            tools.brush.classList.remove('active');
+        }
+        if (tools.pencil.classList.contains('active')) {
+            tools.pencil.classList.remove('active');
+        }
+        if (tools.cursor.classList.contains('active')) {
+            tools.cursor.classList.remove('active');
+        }
     });
     tools.brush.addEventListener('click', function() {
         canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
-        canvas.freeDrawingBrush.width = 15;
+        canvas.freeDrawingBrush.width = currentWidth;
         canvas.freeDrawingBrush.color = currentColor;
         canvas.isDrawingMode = true;
+        if (!this.classList.contains('active')) {
+            this.classList.add('active');
+        }
+        if (tools.cursor.classList.contains('active')) {
+            tools.cursor.classList.remove('active');
+        }
+        if (tools.pencil.classList.contains('active')) {
+            tools.pencil.classList.remove('active');
+        }
+        if (tools.bucket.classList.contains('active')) {
+            tools.bucket.classList.remove('active');
+        }
     });
     tools.pencil.addEventListener('click', function() {
         canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
         canvas.freeDrawingBrush.width = 2;
         canvas.freeDrawingBrush.color = currentColor;
         canvas.isDrawingMode = true;
+        if (!this.classList.contains('active')) {
+            this.classList.add('active');
+        }
+        if (tools.cursor.classList.contains('active')) {
+            tools.cursor.classList.remove('active');
+        }
+        if (tools.brush.classList.contains('active')) {
+            tools.brush.classList.remove('active');
+        }
+        if (tools.bucket.classList.contains('active')) {
+            tools.bucket.classList.remove('active');
+        }
     });
     tools.rectangle.addEventListener('click', function() {
         let rect = new fabric.Rect({
@@ -48,9 +140,10 @@ document.addEventListener('DOMContentLoaded', function() {
             strokeWidth: 5,
                 });  
           canvas.add(rect);
+          rect.center();
     });
     tools.triangle.addEventListener('click', function() {
-        let rect = new fabric.Triangle({
+        let tri = new fabric.Triangle({
             left: 40,
             top: 40,
             width: 50,
@@ -59,7 +152,8 @@ document.addEventListener('DOMContentLoaded', function() {
             stroke: currentColor,
             strokeWidth: 5,
                 });  
-          canvas.add(rect);
+          canvas.add(tri);
+          tri.center();
     });
     tools.circle.addEventListener('click', function() {
         let circle = new fabric.Circle({
@@ -71,10 +165,20 @@ document.addEventListener('DOMContentLoaded', function() {
             strokeWidth: 5,
                 });  
           canvas.add(circle);
+          circle.center();
     });
-    tools.eraser.addEventListener('click', function() {
-        canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
-        canvas.isDrawingMode = true;
+    tools.hexagon.addEventListener('click', function() {
+        var polygon = new fabric.Polygon([
+        { x: 300, y: 150 },
+        { x: 225, y: 280 },
+        { x: 75, y: 280},
+        { x: 0, y: 150},
+        { x: 75, y: 20 },
+        { x: 225, y: 20 }], {
+            fill: currentColor
+        });
+        canvas.add(polygon);
+        polygon.center();
     });
     tools.line.addEventListener('click', function() {
         let line = new fabric.Line([250, 125, 250, 175], {
@@ -85,11 +189,12 @@ document.addEventListener('DOMContentLoaded', function() {
             evented: true,
           });
           canvas.add(line);
+          line.center();
     });
     tools.remove.addEventListener('click', function() {
         let activeObjs = canvas.getActiveObjects();
         if (activeObjs) {
-        activeObjs.forEach((el, i) => {
+        activeObjs.forEach(el => {
             canvas.remove(el);
         });
     }
@@ -100,25 +205,35 @@ document.addEventListener('DOMContentLoaded', function() {
             top: 100,
             textAlign: 'center',
             fontSize: 28,
-            fontFamily: 'Comic Sans'
-
+            fontFamily: 'Comic Sans',
+            stroke: currentColor,
+            fill: currentColor
           });
           canvas.add(text);
+          text.center();
     });
     tools.color.addEventListener('input', function() {
         let color = this.value;
-        let currentEl = canvas.getActiveObject();
-        if (currentEl) {
-        if (currentEl.type === "path") {
-            currentEl.set("stroke", color);
-            canvas.renderAll();
-        } else {
-        currentEl.set("fill", color).set("stroke", color);
+        let activeObjs = canvas.getActiveObjects();
+        if (activeObjs) {
+            activeObjs.forEach(el => {                
+                if (el.type === "path") {
+                    el.set("stroke", color);
+                } else {
+                el.set("fill", color).set("stroke", color);        
+                }
+            });
         canvas.renderAll();
-        }
     }
     currentColor = color;
-        canvas.freeDrawingBrush.color = color;
+    canvas.freeDrawingBrush.color = color;
+    });
+    tools.zoom.addEventListener('input', function() {
+        canvas.zoomToPoint(new fabric.Point(canvas.width / 2, canvas.height / 2), +this.value);
+    });
+    tools.brushWidth.addEventListener('input', function() {
+        canvas.freeDrawingBrush.width = +this.value;
+        currentWidth = +this.value;
     });
 
     tools.download.addEventListener('click', function(e) {
@@ -128,13 +243,14 @@ document.addEventListener('DOMContentLoaded', function() {
     tools.url.addEventListener('click', function(e) {
         e.preventDefault();
         copyUrl();
+        // console.log(canvas.toObject());
     });
 
     function saveImage(el) {
         let link = document.createElement('a');
         link.href = canvas.toDataURL({
             format: 'jpeg',
-            quality: 0.8
+            quality: 1
         });
         link.download = 'canvas.jpg';
         link.click();

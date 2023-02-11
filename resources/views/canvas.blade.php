@@ -21,7 +21,7 @@
         <link rel="shortcut icon" href="{{ config('app.url', '') }}/images/{{ config('app.app_favicon', 'favicon.png') }}" type="image/x-icon">
 
         <!-- Styles -->
-        @vite(['resources/sass/app.scss'])
+        @vite(['resources/sass/canvas.scss'])
     </head>
     <body>
     <header>
@@ -58,39 +58,47 @@
             <div class="row h-100">
                 <div class="col-12 col-md-2 d-flex justify-content-center">
                     <div class="toolbar text-center m-auto">
-                    <div class="border border-secosubtle rounded-2 d-inline-block">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button id="cursor" type="button" class="btn btn-dark"><i class="bi bi-cursor-fill"></i></button>
-                            <button id="pencil" type="button" class="btn btn-dark"><i class="bi bi-pencil-fill"></i></button>
+                    <div class="border border-secosubtle rounded-2 d-inline-block main-tools">
+                        <div class="btn-group" role="group" aria-label="Basic example" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
+                            <button title="Трансформирование" id="cursor" type="button" class="btn btn-dark active" style="border-bottom-left-radius: 0;"><i class="bi bi-cursor-fill"></i></button>
+                            <button title="Карандаш" id="pencil" type="button" class="btn btn-dark" style="border-bottom-right-radius: 0;"><i class="bi bi-pencil-fill"></i></button>
                         </div><br>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button id="brush" type="button" class="btn btn-dark rounded-0"><i
-                                    class="bi bi-brush-fill"></i></button>
-                            <button id="eraser" type="button" class="btn btn-dark rounded-0"><i
-                                    class="bi bi-eraser-fill"></i></button>
+                            <button title="Кисть" id="brush" type="button" class="btn btn-dark rounded-0"><i
+                                    class="bi bi-brush-fill"></i></button>    
+                            
+                            <button title="Заливка" id="bucket" type="button" class="btn btn-dark rounded-0"><i
+                                    class="bi bi-paint-bucket"></i></button>       
                         </div><br>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button id="bucket" type="button" class="btn btn-dark rounded-0"><i
-                                    class="bi bi-paint-bucket"></i></button>
-                            <button id="line" type="button" class="btn btn-dark rounded-0"><i class="bi bi-slash-lg"></i></button>
+                            <button title="Текст" id="text" type="button" class="btn btn-dark rounded-0"><i class="bi bi-fonts"></i></button> 
+                            <button title="Прямая линия" id="line" type="button" class="btn btn-dark rounded-0"><i class="bi bi-slash-lg"></i></button>
                         </div><br>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button id="text" type="button" class="btn btn-dark rounded-0"><i class="bi bi-fonts"></i></button>
-                            <button id="rectangle" type="button" class="btn btn-dark rounded-0"><i
+                            <button title="Шестиугольник" id="hexagon" type="button" class="btn btn-dark rounded-0"><i
+                                    class="bi bi-hexagon-fill"></i></button>
+                            <button title="Прямоугольник" id="rectangle" type="button" class="btn btn-dark rounded-0"><i
                                     class="bi bi-square-fill"></i></button>
                         </div><br>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button id="triangle" type="button" class="btn btn-dark"><i class="bi bi-triangle-fill"></i></button>
-                            <button id="circle" type="button" class="btn btn-dark"><i class="bi bi-circle-fill"></i></button>
+                        <div class="btn-group" role="group" aria-label="Basic example" style="border-top-left-radius: 0; border-top-right-radius: 0;">
+                            <button title="Треугольник" id="triangle" type="button" class="btn btn-dark" style="border-top-left-radius: 0;"><i class="bi bi-triangle-fill"></i></button>
+                            <button title="Круг" id="circle" type="button" class="btn btn-dark" style="border-top-right-radius: 0;"><i class="bi bi-circle-fill"></i></button>
                         </div>
                     </div><br>
-                    <input style="margin-left: 10;" type="color" id="color"><br>
-                    <button type="button" id="remove">Удалить объект</button>
+                    <input class="mt-2" type="color" id="color" value="#4079c2"><br>
+                    <label for="zoom" class="form-label mb-0"><small>Масштаб</small></label><br>
+                    <input type="range" class="form-range w-100" id="zoom" min="1" max="5" value="1" step="0.1" style="max-width: 122px;">
+                    <div class="text-center brush-width d-none">
+                    <label for="brush-width" class="form-label mb-0"><small>Ширина кисти</small></label><br>
+                    <input type="range" class="form-range w-100" id="brush-width" min="5" max="50" value="15" step="1" style="max-width: 122px;">
+                    </div>
+                    <button class="nav-link btn-custom p-2" type="button" id="remove"><small>Удалить объект</small></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-8 d-flex">
-                    <canvas id="canvas" class="m-auto" width="500" height="500">
+                    <canvas id="canvas"></canvas>
                 </div>
+                <div class="col-12 col-md-2"></div>
                 <div class="modal" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
