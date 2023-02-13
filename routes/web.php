@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/editor', function () {
-    return view('canvas');
+Route::get('/maps/dota', function () {
+    return view('canvas', ['bg' => '/images/maps/dota2/dota2.jpg']);
+});
+Route::get('/maps/cs', function () {
+    return view('canvas', ['bg' => '/images/maps/CS/inferno.jpg']);
 });

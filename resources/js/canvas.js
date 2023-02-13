@@ -6,10 +6,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let vh = document.documentElement.clientHeight / 100;
     document.querySelector('canvas').width = vh * 78;
     document.querySelector('canvas').height = vh * 78;
+    let bgImage = document.querySelector('#bg').dataset.bg;
     
     let canvas = new fabric.Canvas('canvas');
     // canvas.loadFromJSON();
-    fabric.Image.fromURL('/images/dota.jpg', function(img) {
+    fabric.Image.fromURL(bgImage, function(img) {
         img.scaleToWidth(canvas.width);
         img.scaleToHeight(canvas.height);
         canvas.setBackgroundImage(img);
@@ -35,7 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
         download: document.querySelector('#download'),        
         url: document.querySelector('#url'),    
         zoom: document.querySelector('#zoom'),
-        brushWidth: document.querySelector('#brush-width')
+        brushWidth: document.querySelector('#brush-width'),
+        clear: document.querySelector('#clear')
     };
 
     let mainTools = document.querySelector('.toolbar .main-tools');
@@ -181,10 +183,10 @@ document.addEventListener('DOMContentLoaded', function() {
         polygon.center();
     });
     tools.line.addEventListener('click', function() {
-        let line = new fabric.Line([250, 125, 250, 175], {
+        let line = new fabric.Line([250, 125, 350, 125], {
             fill: currentColor,
             stroke: currentColor,
-            strokeWidth: 5,
+            strokeWidth: 2,
             selectable: true,
             evented: true,
           });
@@ -195,6 +197,14 @@ document.addEventListener('DOMContentLoaded', function() {
         let activeObjs = canvas.getActiveObjects();
         if (activeObjs) {
         activeObjs.forEach(el => {
+            canvas.remove(el);
+        });
+    }
+    });
+    tools.clear.addEventListener('click', function() {
+        let objs = canvas.getObjects();
+        if (objs) {
+        objs.forEach(el => {
             canvas.remove(el);
         });
     }

@@ -42,10 +42,10 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link btn-custom me-md-2" href="editor">Dota 2</a>
+                                <a class="nav-link btn-custom me-md-2" href="/maps/dota">Dota 2</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link btn-custom mt-2 mt-md-0" href="editor">CS:GO</a>
+                                <a class="nav-link btn-custom mt-2 mt-md-0" href="/maps/cs">CS:GO</a>
                             </li>
                         </ul>
                     </div>
@@ -57,10 +57,10 @@
     <div class="container-fluid" style="height: 80vh;">
         <div class="row h-100">
             <div class="col-12 col-md-6 d-flex p-2">
-                <h1 class="m-auto">Создай свою <br> уникальную карту</h1>
+                <h1 class="m-auto">Тактические доски <br> для компьютерного спорта</h1>
             </div>
             <div class="col-12 col-md-6 d-flex p-2">
-                <img src="images/dota.jpg" alt="Dota" class="w-100 m-auto rounded" style="max-width: 500px;" />
+                <img src="images/preview.jpg" alt="Dota" class="w-100 m-auto rounded" style="max-width: 500px;" />
             </div>
         </div>
     </div>

@@ -27,7 +27,7 @@
     <header>
         <nav class="navbar navbar-expand-md bg-body-tertiary" role="navigation" style="height: 10vh">
             <div class="container-fluid ps-lg-5 pe-lg-5">
-                <a class="navbar-brand order-2 order-md-1" href="/"><img src="images/logo.png" alt="Логотип" class="w-100"
+                <a class="navbar-brand order-2 order-md-1" href="/"><img src="/images/logo.png" alt="Логотип" class="w-100"
                         style="max-width: 250px;"></a>
                 <button class="navbar-toggler order-1 order-md-2 border-0" type="button"
                     data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
@@ -93,9 +93,10 @@
                     <input type="range" class="form-range w-100" id="brush-width" min="5" max="50" value="15" step="1" style="max-width: 122px;">
                     </div>
                     <button class="nav-link btn-custom p-2" type="button" id="remove"><small>Удалить объект</small></button>
+                    <button class="nav-link btn-custom p-2 mt-2 ms-auto me-auto" type="button" id="clear"><small>Очистить</small></button>
                     </div>
                 </div>
-                <div class="col-12 col-md-8 d-flex">
+                <div class="col-12 col-md-8 d-flex" data-bg="{{ $bg }}" id="bg">
                     <canvas id="canvas"></canvas>
                 </div>
                 <div class="col-12 col-md-2"></div>
