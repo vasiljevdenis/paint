@@ -1,11 +1,27 @@
 import './bootstrap';
 import { fabric } from "fabric";
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+ 
+window.Pusher = Pusher;
+ 
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: import.meta.env.VITE_PUSHER_APP_KEY,
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+    forceTLS: true
+});
+
+Echo.channel('home')
+    .listen('Canvas', e => {
+        console.log(e.message);
+    });
 
 document.addEventListener('DOMContentLoaded', function() {
 
     let vh = document.documentElement.clientHeight / 100;
-    document.querySelector('canvas').width = vh * 78;
     document.querySelector('canvas').height = vh * 78;
+    document.querySelector('canvas').width = vh * 78;
     let bgImage = document.querySelector('#bg').dataset.bg;
     
     let canvas = new fabric.Canvas('canvas');

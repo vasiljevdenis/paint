@@ -20,8 +20,10 @@
     "dependencies": {
         "bootstrap-icons": "^1.10.3",
         "fabric": "^5.3.0",
+        "laravel-echo": "^1.15.0",
         "mobx": "^6.7.0",
         "mobx-react-lite": "^3.4.0",
+        "pusher-js": "^8.0.1",
         "react-router-dom": "^6.8.1"
     }
 }
