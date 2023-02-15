@@ -12,7 +12,7 @@ window.Echo = new Echo({
     forceTLS: true
 });
 
-Echo.channel('home')
+window.Echo.channel('home')
     .listen('Canvas', e => {
         console.log(e.message);
     });
