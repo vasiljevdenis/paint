@@ -14,16 +14,18 @@ class Canvas implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message = "Hello";
+    public $id;
+    public $token;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct($id, $token)
     {
-        $this->message = $message;
+        $this->id = $id;
+        $this->token = $token;
     }
 
     /**
@@ -33,6 +35,6 @@ class Canvas implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('home');
+        return new Channel('fabric'.$this->id);
     }
 }

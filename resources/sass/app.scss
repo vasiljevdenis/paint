@@ -31,3 +31,7 @@ font-family: 'Roboto', sans-serif;
     opacity: .85;
     color: rgba(33, 37, 41, .85);
 }
+
+.dropdown-toggle::after {
+    display: none;
+}

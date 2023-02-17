@@ -23,7 +23,7 @@
         <!-- Styles -->
         @vite(['resources/sass/canvas.scss'])
     </head>
-    <body>
+    <body data-uniqid="{{ $uniqid }}">
     <header>
         <nav class="navbar navbar-expand-md bg-body-tertiary" role="navigation" style="height: 10vh">
             <div class="container-fluid ps-lg-5 pe-lg-5">
@@ -96,7 +96,7 @@
                     <button class="nav-link btn-custom p-2 mt-2 ms-auto me-auto" type="button" id="clear"><small>Очистить</small></button>
                     </div>
                 </div>
-                <div class="col-12 col-md-8 d-flex" data-bg="{{ $bg }}" id="bg">
+                <div class="col-12 col-md-8 d-flex">
                     <canvas id="canvas"></canvas>
                 </div>
                 <div class="col-12 col-md-2"></div>
@@ -129,6 +129,17 @@
             </div>
         </div>
     </footer>
+    <div class="toast align-items-center position-fixed end-0" style="top: 10vh;" role="alert" aria-live="assertive" aria-atomic="true" id="copyToast" data-bs-delay="800">
+  <div class="d-flex">
+    <div class="toast-body">
+      Ссылка скопирована!
+    </div>
+    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</div>
+    <script type="application/json" id="json">
+        {{ $data }}
+    </script>
         @vite(['resources/js/canvas.js'])
     </body>
 </html>

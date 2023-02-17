@@ -40,12 +40,17 @@
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" id="maps">
                             <li class="nav-item">
-                                <a class="nav-link btn-custom me-md-2" href="/maps/dota">Dota 2</a>
+                                <a class="nav-link btn-custom me-md-2" href="" data-category="dota2" data-name="dota2" data-bg="/images/maps/dota2/dota2.jpg">Dota 2</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn-custom mt-2 mt-md-0" href="/maps/cs">CS:GO</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle btn-custom mt-2 mt-md-0" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">CS:GO</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_inferno" data-bg="/images/maps/CS/inferno.jpg">de_inferno</a></li>
+                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_nuke" data-bg="/images/maps/CS/nuke.jpg">de_nuke</a></li>
+                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_mirage" data-bg="/images/maps/CS/mirage.jpg">de_mirage</a></li>
+                                </ul>
                             </li>
                         </ul>
                     </div>

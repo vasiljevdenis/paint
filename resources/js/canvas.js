@@ -2,39 +2,61 @@ import './bootstrap';
 import { fabric } from "fabric";
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
- 
-window.Pusher = Pusher;
- 
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: import.meta.env.VITE_PUSHER_APP_KEY,
-    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
-    forceTLS: true
-});
-
-window.Echo.channel('home')
-    .listen('Canvas', e => {
-        console.log(e.message);
-    });
+import * as bootstrap from 'bootstrap';
 
 document.addEventListener('DOMContentLoaded', function() {
 
+    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const tokenID = (+new Date).toString(16);
     let vh = document.documentElement.clientHeight / 100;
     document.querySelector('canvas').height = vh * 78;
     document.querySelector('canvas').width = vh * 78;
-    let bgImage = document.querySelector('#bg').dataset.bg;
+    // let bgImage = '/images/maps/dota2/dota2.jpg';
     
     let canvas = new fabric.Canvas('canvas');
-    // canvas.loadFromJSON();
-    fabric.Image.fromURL(bgImage, function(img) {
-        img.scaleToWidth(canvas.width);
-        img.scaleToHeight(canvas.height);
-        canvas.setBackgroundImage(img);
-        canvas.requestRenderAll();
-     });
+    let json = document.querySelector('#json').innerText.replaceAll('&quot;', '"');
+    canvas.loadFromJSON(json);
+    // fabric.Image.fromURL(bgImage, function(img) {
+    //     img.scaleToWidth(canvas.width);
+    //     img.scaleToHeight(canvas.height);
+    //     canvas.setBackgroundImage(img);
+    //     canvas.requestRenderAll();
+    //  });
     canvas.freeDrawingBrush.color = '#4079c2';
     let currentColor = "#4079c2";
     let currentWidth = 15;
+
+    canvas.on({
+        'mouse:down': function(options) {
+        if (options.target && tools.bucket.classList.contains('active')) {
+            if (options.target.type === "path") {
+                options.target.set("stroke", currentColor);
+            } else {
+            options.target.set("fill", currentColor).set("stroke", currentColor);        
+            }
+            saveCanvas();
+        }
+      },
+      'path:created': saveCanvas,
+      'object:modified': saveCanvas
+    });
+
+    function saveCanvas() {
+        let data = new FormData();
+        data.append('uniqid', document.body.dataset.uniqid);
+        data.append('token', tokenID);
+        data.append('data', JSON.stringify(canvas.toObject()));
+        fetch('/savecanv', {
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': token
+            },
+            body: data
+        })
+        .then((response) => response.text())
+        .then((data) => {
+        });
+    }
 
     let tools = {
         cursor: document.querySelector('#cursor'),
@@ -69,17 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    canvas.on({
-        'mouse:down': function(options) {
-        if (options.target && tools.bucket.classList.contains('active')) {
-            if (options.target.type === "path") {
-                options.target.set("stroke", currentColor);
-            } else {
-            options.target.set("fill", currentColor).set("stroke", currentColor);        
-            }
-        }
-      }
-    });
 
     tools.cursor.addEventListener('click', function() {
         canvas.isDrawingMode = false;
@@ -95,6 +106,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (tools.bucket.classList.contains('active')) {
             tools.bucket.classList.remove('active');
         }
+        // document.querySelector('main').requestFullscreen();
+        // canvas.setHeight(700);
+        // canvas.setWidth(700);
+        // canvas.renderAll();
     });
     tools.bucket.addEventListener('click', function() {
         canvas.isDrawingMode = false;
@@ -149,8 +164,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     tools.rectangle.addEventListener('click', function() {
         let rect = new fabric.Rect({
-            left: 40,
-            top: 40,
+            left: 'center',
+            top: 'center',
             width: 50,
             height: 50,      
             fill: currentColor,
@@ -159,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });  
           canvas.add(rect);
           rect.center();
+          saveCanvas();
     });
     tools.triangle.addEventListener('click', function() {
         let tri = new fabric.Triangle({
@@ -172,6 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });  
           canvas.add(tri);
           tri.center();
+          saveCanvas();
     });
     tools.circle.addEventListener('click', function() {
         let circle = new fabric.Circle({
@@ -184,6 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });  
           canvas.add(circle);
           circle.center();
+          saveCanvas();
     });
     tools.hexagon.addEventListener('click', function() {
         var polygon = new fabric.Polygon([
@@ -197,6 +215,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         canvas.add(polygon);
         polygon.center();
+        saveCanvas();
     });
     tools.line.addEventListener('click', function() {
         let line = new fabric.Line([250, 125, 350, 125], {
@@ -208,6 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
           canvas.add(line);
           line.center();
+          saveCanvas();
     });
     tools.remove.addEventListener('click', function() {
         let activeObjs = canvas.getActiveObjects();
@@ -215,6 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
         activeObjs.forEach(el => {
             canvas.remove(el);
         });
+        saveCanvas();
     }
     });
     tools.clear.addEventListener('click', function() {
@@ -223,6 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
         objs.forEach(el => {
             canvas.remove(el);
         });
+        saveCanvas();
     }
     });
     tools.text.addEventListener('click', function() {
@@ -237,11 +259,14 @@ document.addEventListener('DOMContentLoaded', function() {
           });
           canvas.add(text);
           text.center();
+          saveCanvas();
     });
     tools.color.addEventListener('input', function() {
         let color = this.value;
         let activeObjs = canvas.getActiveObjects();
-        if (activeObjs) {
+        currentColor = color;
+        canvas.freeDrawingBrush.color = color;
+        if (activeObjs.length > 0) {
             activeObjs.forEach(el => {                
                 if (el.type === "path") {
                     el.set("stroke", color);
@@ -251,8 +276,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         canvas.renderAll();
     }
-    currentColor = color;
-    canvas.freeDrawingBrush.color = color;
+    });
+    tools.color.addEventListener('change', function() {
+        saveCanvas();
     });
     tools.zoom.addEventListener('input', function() {
         canvas.zoomToPoint(new fabric.Point(canvas.width / 2, canvas.height / 2), +this.value);
@@ -284,7 +310,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function copyUrl() {
         navigator.clipboard.writeText(location.href);
+        const bsToast = new bootstrap.Toast('#copyToast');
+        bsToast.show();
     }
 
+    window.Pusher = Pusher;
+ 
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: import.meta.env.VITE_PUSHER_APP_KEY,
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+    forceTLS: false,
+    encryption: true
+});
+
+window.Echo.channel(`fabric${document.body.dataset.uniqid}`)
+    .listen('Canvas', e => {
+        if (e.id.length > 0 && tokenID != e.token) {
+            getMap(e.id);
+        }
+    });
+    
+    function getMap(uniqid) {
+        fetch(`/getmap${uniqid}`, {
+            method: "GET",
+            headers: {
+                'X-CSRF-TOKEN': token
+            }
+        })
+        .then((response) => response.text())
+        .then((data) => {
+            console.log(data);
+            canvas.loadFromJSON(data, function() {
+                canvas.renderAll();
+            });
+        });
+    }
 });
 
