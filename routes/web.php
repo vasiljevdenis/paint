@@ -40,7 +40,7 @@ Route::get('/maps/map{uniqid}', function ($uniqid) {
 });
 Route::post('/savecanv', function (Request $request) {
     if ($request->filled(['data', 'uniqid'])) {
-        $count = DB::update('update canvas set data = :data, updated = CURRENT_TIMESTAMP() where uniqid = :uniqid', 
+        $count = DB::update('update canvas set data = :data where uniqid = :uniqid', 
         ['data' => $request->input('data'), 'uniqid' => $request->input('uniqid')]);        
     if (isset($count)) {
         $token = $request->input('token');
