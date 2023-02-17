@@ -50,6 +50,10 @@
                                     <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_inferno" data-bg="/images/maps/CS/inferno.jpg">de_inferno</a></li>
                                     <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_nuke" data-bg="/images/maps/CS/nuke.jpg">de_nuke</a></li>
                                     <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_mirage" data-bg="/images/maps/CS/mirage.jpg">de_mirage</a></li>
+                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_cache" data-bg="/images/maps/CS/cache.jpg">de_cache</a></li>
+                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_overpass" data-bg="/images/maps/CS/overpass.jpg">de_overpass</a></li>
+                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_train" data-bg="/images/maps/CS/train.jpg">de_train</a></li>
+                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_vertigo" data-bg="/images/maps/CS/vertigo.jpg">de_vertigo</a></li>
                                 </ul>
                             </li>
                         </ul>
