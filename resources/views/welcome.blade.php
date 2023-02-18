@@ -66,7 +66,10 @@
     <div class="container-fluid" style="height: 80vh;">
         <div class="row h-100">
             <div class="col-12 col-md-6 d-flex p-2">
-                <h1 class="m-auto">Тактические доски <br> для компьютерного спорта</h1>
+                <div class="m-auto">
+                    <h1>Тактические доски <br> для компьютерного спорта</h1>
+                    <p>(работай с командой в режиме реального времени)</p>
+                </div>
             </div>
             <div class="col-12 col-md-6 d-flex p-2">
                 <img src="images/preview.jpg" alt="Dota" class="w-100 m-auto rounded" style="max-width: 500px;" />

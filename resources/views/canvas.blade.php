@@ -58,6 +58,7 @@
             <div class="row h-100">
                 <div class="col-12 col-md-2 d-flex justify-content-center">
                     <div class="toolbar text-center m-auto">
+                    <a class="nav-link btn-custom mb-2 ms-auto me-auto" style="width: 40px; min-width: auto;" href="/" title="Домой"><i class="bi bi-house-door-fill"></i></a>
                     <div class="border border-secosubtle rounded-2 d-inline-block main-tools">
                         <div class="btn-group" role="group" aria-label="Basic example" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
                             <button title="Трансформирование" id="cursor" type="button" class="btn btn-dark active" style="border-bottom-left-radius: 0;"><i class="bi bi-cursor-fill"></i></button>
