@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Events\Canvas;
 
@@ -17,23 +19,20 @@ use App\Events\Canvas;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/maps/dota', function () {
-    return view('canvas', ['bg' => '/images/maps/dota2/dota2.jpg']);
-});
-Route::get('/maps/cs', function () {
-    return view('canvas', ['bg' => '/images/maps/CS/inferno.jpg']);
-});
-Route::get('/event', function () {
-    event(new Canvas('Hello'));
+    $res = DB::select('select * from maps');
+    $mapped = array_count_values(Arr::map($res, function ($el) {
+        return $el->category;
+    }));
+    $mapped = Arr::sort($mapped, function ($el) {
+        return $el;
+    });
+    return view('welcome', ['data' => $res, 'count' => $mapped]);
 });
 Route::get('/maps/map{uniqid}', function ($uniqid) {
     if ($uniqid) {
         $res = DB::select('select * from canvas where uniqid = :uniqid', 
         ['uniqid' => $uniqid]);
     if (isset($res)) {
-        // print_r($res);
         return view('canvas', ['data' => $res[0]->data, 'uniqid' => $uniqid]);
     }
     }
@@ -65,6 +64,34 @@ Route::get('/getmap{uniqid}', function ($uniqid) {
         ['uniqid' => $uniqid]);
     if (isset($res)) {
         return $res[0]->data;
+    }
+    }
+});
+Route::get('/newmap', function () {
+    $res = DB::select('select * from maps');
+    $res = Arr::sort($res, function ($value) {
+        return $value->category;
+    });
+    return view('newmap', ['data' => $res]);
+});
+Route::post('/removemap', function (Request $request) {
+    $deleted = DB::delete('delete from maps where id = :id', ['id' => $request->input('id')]);
+    if (isset($deleted)) {
+        return $deleted;
+    }
+});
+Route::post('/createmap', function (Request $request) {
+    if ($request->filled(['name', 'category'])) {
+        Storage::makeDirectory('/public/images/maps/'.$request->input('category'));
+        $path = $request->bg->storeAs('/public/images/maps/'.$request->input('category'), $request->input('name').'.'.$request->bg->extension());
+        $bg = '/storage/images/maps/'.$request->input('category').'/'.$request->input('name').'.'.$request->bg->extension();
+        $img = getimagesize($request->bg);
+        $width = $img[0];
+        $height = $img[1];
+        $count = DB::insert('insert into maps (category, name, bg, width, height) values (:category, :name, :bg, :width, :height)', 
+        ['category' => $request->input('category'), 'name' => $request->input('name'), 'bg' => $bg, 'width' => $width, 'height' => $height]);
+    if (isset($count)) {
+        return $count;
     }
     }
 });

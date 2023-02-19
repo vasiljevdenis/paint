@@ -58,7 +58,11 @@
             <div class="row h-100">
                 <div class="col-12 col-md-2 d-flex justify-content-center">
                     <div class="toolbar text-center m-auto">
-                    <a class="nav-link btn-custom mb-2 ms-auto me-auto" style="width: 40px; min-width: auto;" href="/" title="Домой"><i class="bi bi-house-door-fill"></i></a>
+                    <div class="btn-group mb-2" role="group" aria-label="Basic example">
+                        <a class="nav-link btn-custom me-1" style="width: 40px; min-width: auto;" href="/" title="Домой"><i class="bi bi-house-door-fill"></i></a>
+                        <a class="nav-link btn-custom" style="width: 40px; min-width: auto;" href="" title="На весь экран" id="fullscreen"><i class="bi bi-arrows-fullscreen"></i></a>
+                        <a class="nav-link btn-custom d-none" style="width: 40px; min-width: auto;" href="" title="Выход из полноэкранного режима" id="screen"><i class="bi bi-fullscreen-exit"></i></a>
+                    </div><br>
                     <div class="border border-secosubtle rounded-2 d-inline-block main-tools">
                         <div class="btn-group" role="group" aria-label="Basic example" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
                             <button title="Трансформирование" id="cursor" type="button" class="btn btn-dark active" style="border-bottom-left-radius: 0;"><i class="bi bi-cursor-fill"></i></button>
@@ -98,7 +102,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-8 d-flex">
-                    <canvas id="canvas"></canvas>
+                    <canvas id="canvas"></canvas>                    
                 </div>
                 <div class="col-12 col-md-2"></div>
                 <div class="modal" tabindex="-1">

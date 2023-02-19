@@ -31,7 +31,22 @@ font-family: 'Roboto', sans-serif;
     opacity: .85;
     color: rgba(33, 37, 41, .85);
 }
-
+.dropstart .dropdown-toggle::before,
 .dropdown-toggle::after {
     display: none;
+}
+
+.dropdown-menu li {
+    position: relative;
+}
+
+.nav-item .submenu {
+    display: none;
+    position: absolute;
+    right: 100%;
+    top: -7px;
+}
+
+.dropdown-menu>li:hover>.submenu {
+    display: block;
 }

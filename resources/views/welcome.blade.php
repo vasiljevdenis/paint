@@ -41,21 +41,55 @@
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" id="maps">
+                        @php
+                            $counter = 0;
+                        @endphp    
+                        @foreach ($count as $key => $el)
+                        @php
+                            $counter++;
+                            $index = array_column($data, 'category');
+                            $index = array_search($key, $index);
+                        @endphp    
+                            @if ($el === 1 && $counter < 3)                        
                             <li class="nav-item">
-                                <a class="nav-link btn-custom me-md-2" href="" data-category="dota2" data-name="dota2" data-bg="/images/maps/dota2/dota2.jpg">Dota 2</a>
+                                <a class="nav-link btn-custom me-md-2" href="" data-category="{{ $data[$index]->category }}" data-name="{{ $data[$index]->name }}" data-bg="{{ $data[$index]->bg }}" data-width="{{ $data[$index]->width }}" data-height="{{ $data[$index]->height }}">{{ $data[$index]->category }}</a>
                             </li>
+                            @elseif ($el > 1 && $counter < 3)
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle btn-custom mt-2 mt-md-0" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">CS:GO</a>
+                                <a class="nav-link dropdown-toggle btn-custom mt-2 mt-md-0" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ $key }}</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_inferno" data-bg="/images/maps/CS/inferno.jpg">de_inferno</a></li>
-                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_nuke" data-bg="/images/maps/CS/nuke.jpg">de_nuke</a></li>
-                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_mirage" data-bg="/images/maps/CS/mirage.jpg">de_mirage</a></li>
-                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_cache" data-bg="/images/maps/CS/cache.jpg">de_cache</a></li>
-                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_overpass" data-bg="/images/maps/CS/overpass.jpg">de_overpass</a></li>
-                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_train" data-bg="/images/maps/CS/train.jpg">de_train</a></li>
-                                    <li><a class="dropdown-item" href="" data-category="cs-go" data-name="de_vertigo" data-bg="/images/maps/CS/vertigo.jpg">de_vertigo</a></li>
+                                @foreach ($data as $dropdown)
+                                    @if ($dropdown->category === $key)
+                                    <li><a class="dropdown-item" href="" data-category="{{ $dropdown->category }}" data-name="{{ $dropdown->name }}" data-bg="{{ $dropdown->bg }}" data-width="{{ $dropdown->width }}" data-height="{{ $dropdown->height }}">{{ $dropdown->name }}</a></li>
+                                    @endif
+                                @endforeach
                                 </ul>
                             </li>
+                            @elseif ($counter > 2)
+                                @if ($counter === 3)
+                            <li class="nav-item dropdown dropstart d-flex">
+                                <a class="nav-link dropdown-toggle p-0 m-auto" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical fs-4"></i></a>
+                                <ul class="dropdown-menu">
+                                 @endif                               
+                                @if ($el === 1)
+                                    <li><a class="dropdown-item" href="" data-category="{{ $data[$index]->category }}" data-name="{{ $data[$index]->name }}" data-bg="{{ $data[$index]->bg }}" data-width="{{ $data[$index]->width }}" data-height="{{ $data[$index]->height }}">{{ $data[$index]->category }}</a></li>
+                                @elseif ($el > 1)
+                                <li class="dropdown-item dropdown">
+                                    <a class="nav-link dropdown-toggle mt-2 mt-md-0" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ $key }}</a>
+                                    <ul class="dropdown-menu submenu">
+                                    @foreach ($data as $dropdown)
+                                        @if ($dropdown->category === $key)
+                                        <li><a class="dropdown-item" href="" data-category="{{ $dropdown->category }}" data-name="{{ $dropdown->name }}" data-bg="{{ $dropdown->bg }}" data-width="{{ $dropdown->width }}" data-height="{{ $dropdown->height }}">{{ $dropdown->name }}</a></li>
+                                        @endif
+                                    @endforeach
+                                    </ul>
+                                </li>              
+                                @endif                  
+                            @elseif ($counter === count($count))
+                                </ul>
+                                </li>
+                            @endif
+                        @endforeach
                         </ul>
                     </div>
                 </div>

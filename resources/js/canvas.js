@@ -8,20 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const tokenID = (+new Date).toString(16);
-    let vh = document.documentElement.clientHeight / 100;
-    document.querySelector('canvas').height = vh * 78;
-    document.querySelector('canvas').width = vh * 78;
-    // let bgImage = '/images/maps/dota2/dota2.jpg';
+    let vh = document.documentElement.clientHeight / 100 * 78; 
     
     let canvas = new fabric.Canvas('canvas');
     let json = document.querySelector('#json').innerText.replaceAll('&quot;', '"');
-    canvas.loadFromJSON(json);
-    // fabric.Image.fromURL(bgImage, function(img) {
-    //     img.scaleToWidth(canvas.width);
-    //     img.scaleToHeight(canvas.height);
-    //     canvas.setBackgroundImage(img);
-    //     canvas.requestRenderAll();
-    //  });
+    let ch = JSON.parse(json).clientHeight;
+    canvas.loadFromJSON(json, function() {
+        resizeCanvas(ch);
+    });
     canvas.freeDrawingBrush.color = '#4079c2';
     let currentColor = "#4079c2";
     let currentWidth = 15;
@@ -41,11 +35,60 @@ document.addEventListener('DOMContentLoaded', function() {
       'object:modified': saveCanvas
     });
 
+    
+    function resizeCanvas(clientHeight) {
+        let s = 78;
+        if (document.querySelector('main').classList.contains('fullscreen')) {
+            s = 98;
+        }
+        let percent;
+        if (clientHeight && typeof clientHeight === 'number') {
+            percent = ((clientHeight - document.documentElement.clientHeight / 100 * s) / clientHeight) * 100;
+        } else {
+            percent = ((vh - document.documentElement.clientHeight / 100 * s) / vh) * 100;
+        }
+        vh = document.documentElement.clientHeight / 100 * s;
+        canvas.discardActiveObject();
+        var sel = new fabric.ActiveSelection(canvas.getObjects(), {
+          canvas: canvas,
+        });
+        canvas.setActiveObject(sel);
+        if (Math.sign(percent) === 1) {
+            sel.scaleToWidth(sel.width - sel.width / 100 * percent);
+            sel.scaleToHeight(sel.height - sel.height / 100 * percent);
+            sel.top -= sel.top / 100 * percent;
+            sel.left -= sel.left / 100 * percent;
+        } else if (Math.sign(percent) === -1) {
+            sel.scaleToWidth(sel.width + sel.width / 100 * percent * -1);
+            sel.scaleToHeight(sel.height + sel.height / 100 * percent * -1);
+            sel.top += sel.top / 100 * percent * -1;
+            sel.left += sel.left / 100 * percent * -1;
+        }
+        sel.setCoords();
+        let bgPercent = ((canvas.backgroundImage.height - vh) / canvas.backgroundImage.height) * 100;
+        if (Math.sign(bgPercent) === 1) {
+            canvas.setWidth(canvas.backgroundImage.width - canvas.backgroundImage.width / 100 * bgPercent);
+            canvas.backgroundImage.scaleToWidth(canvas.backgroundImage.width - canvas.backgroundImage.width / 100 * bgPercent);
+        } else if (Math.sign(bgPercent) === -1) {
+            canvas.setWidth(canvas.backgroundImage.width + canvas.backgroundImage.width / 100 * bgPercent * -1);
+            canvas.backgroundImage.scaleToWidth(canvas.backgroundImage.width + canvas.backgroundImage.width / 100 * bgPercent * -1);
+        }
+        canvas.setHeight(vh);
+        canvas.backgroundImage.scaleToHeight(vh);        
+        canvas.requestRenderAll();
+        canvas.calcOffset();
+        canvas.discardActiveObject();
+    };
+    window.addEventListener('resize', resizeCanvas);
+    document.querySelector('main').addEventListener('onfullscreenchange', resizeCanvas);
+
     function saveCanvas() {
         let data = new FormData();
         data.append('uniqid', document.body.dataset.uniqid);
         data.append('token', tokenID);
-        data.append('data', JSON.stringify(canvas.toObject()));
+        let o = canvas.toObject();
+        o.clientHeight = vh;
+        data.append('data', JSON.stringify(o));
         fetch('/savecanv', {
             method: "POST",
             headers: {
@@ -56,6 +99,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then((response) => response.text())
         .then((data) => {
         });
+    }
+
+    function log() {
+        return;
     }
 
     let tools = {
@@ -75,7 +122,9 @@ document.addEventListener('DOMContentLoaded', function() {
         url: document.querySelector('#url'),    
         zoom: document.querySelector('#zoom'),
         brushWidth: document.querySelector('#brush-width'),
-        clear: document.querySelector('#clear')
+        clear: document.querySelector('#clear'),
+        fullscreen: document.querySelector('#fullscreen'),
+        screen: document.querySelector('#screen')
     };
 
     let mainTools = document.querySelector('.toolbar .main-tools');
@@ -105,11 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (tools.bucket.classList.contains('active')) {
             tools.bucket.classList.remove('active');
-        }
-        // document.querySelector('main').requestFullscreen();
-        // canvas.setHeight(700);
-        // canvas.setWidth(700);
-        // canvas.renderAll();
+        }    
     });
     tools.bucket.addEventListener('click', function() {
         canvas.isDrawingMode = false;
@@ -247,6 +292,20 @@ document.addEventListener('DOMContentLoaded', function() {
         saveCanvas();
     }
     });
+    tools.fullscreen.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('main').requestFullscreen();
+        document.querySelector('main').classList.add('fullscreen');
+        this.classList.add('d-none');
+        tools.screen.classList.remove('d-none');
+    });
+    tools.screen.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.exitFullscreen();
+        document.querySelector('main').classList.remove('fullscreen');
+        this.classList.add('d-none');
+        tools.fullscreen.classList.remove('d-none');
+    });
     tools.text.addEventListener('click', function() {
         let text = new fabric.IText('текст', {
             left: 100,
@@ -295,7 +354,6 @@ document.addEventListener('DOMContentLoaded', function() {
     tools.url.addEventListener('click', function(e) {
         e.preventDefault();
         copyUrl();
-        // console.log(canvas.toObject());
     });
 
     function saveImage(el) {
@@ -340,9 +398,9 @@ window.Echo.channel(`fabric${document.body.dataset.uniqid}`)
         })
         .then((response) => response.text())
         .then((data) => {
-            console.log(data);
+            let ch = JSON.parse(data).clientHeight;
             canvas.loadFromJSON(data, function() {
-                canvas.renderAll();
+                resizeCanvas(ch);
             });
         });
     }
