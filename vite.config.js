@@ -10,7 +10,8 @@ export default defineConfig({
                 'resources/sass/canvas.scss',
                 'resources/js/app.js',
                 'resources/js/home.js',
-                'resources/js/canvas.js'
+                'resources/js/canvas.js',
+                'resources/js/newmap.js'
             ],
             refresh: true,
         }),
