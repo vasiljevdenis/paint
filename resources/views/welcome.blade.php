@@ -50,13 +50,13 @@
                             $index = array_column($data, 'category');
                             $index = array_search($key, $index);
                         @endphp    
-                            @if ($el === 1 && $counter < 3)                        
+                            @if ($el === 1 && $counter < 7)                        
                             <li class="nav-item">
                                 <a class="nav-link btn-custom me-md-2" href="" data-category="{{ $data[$index]->category }}" data-name="{{ $data[$index]->name }}" data-bg="{{ $data[$index]->bg }}" data-width="{{ $data[$index]->width }}" data-height="{{ $data[$index]->height }}">{{ $data[$index]->category }}</a>
                             </li>
-                            @elseif ($el > 1 && $counter < 3)
+                            @elseif ($el > 1 && $counter < 7)
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle btn-custom mt-2 mt-md-0" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ $key }}</a>
+                                <a class="nav-link dropdown-toggle btn-custom mt-2 me-md-2 mt-md-0" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ $key }}</a>
                                 <ul class="dropdown-menu">
                                 @foreach ($data as $dropdown)
                                     @if ($dropdown->category === $key)
@@ -114,8 +114,15 @@
     <footer>
         <div class="container-fluid" style="background: rgba(43, 48, 53, 1); height: 10vh;">
             <div class="row h-100">
-                <div class="col-12 pt-3 pb-3 d-flex">
+                <div class="col-12 col-md-6 pt-3 pb-3 d-flex">
                     <p class='m-auto'>© Copyright Tacticten. All Rights Reserved</p>
+                </div>
+                <div class="col-12 col-md-6  pt-3 pb-3 d-flex">
+                    <div class='m-auto'>
+                        <a href="https://cyberten.ru" target="_blank" title="Cyberten"><img src="/images/cyberten.jpg" alt="cyberten" class="h-100" style="max-height: 32px;"></a>
+                        <a href="https://warmten.ru" target="_blank" title="Warmten"><img src="/images/warmten.jpg" alt="warmten" class="h-100" style="max-height: 32px;"></a>
+                        <a href="https://vk.com/cyberlesgaft" target="_blank" title="VK"><img src="/images/vk.jpg" alt="vk" class="h-100" style="max-height: 32px;"></a>
+                    </div>
                 </div>
             </div>
         </div>
