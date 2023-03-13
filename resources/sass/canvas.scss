@@ -30,3 +30,29 @@ input[type="color"] {
     border: none;
     border-radius: 50%;
   }
+
+  @media (max-width: 767px) {
+    .toolbar {
+        transform: rotate(-90deg) scale(.8);
+        position: sticky;
+        left: 0;
+    }
+    .toolbar i::before {
+        transform: rotate(90deg);
+    }
+    .toolbar-wrapper {
+      max-height: 120px;
+      padding-left: 0 !important;
+      justify-content: left !important;
+      position: relative;
+    }
+    .btn-custom#remove,
+    .btn-custom#clear {
+      width: 40px !important;
+      min-width: auto !important;
+      display: inline-block;
+    }
+    .toolbar #zoom {
+      display: block !important;
+    }
+}

@@ -42,9 +42,9 @@
     </head>
     <body>
     <header>
-        <nav class="navbar navbar-expand-md bg-body-tertiary" role="navigation" style="height: 10vh;">
+        <nav class="navbar navbar-expand-md bg-body-tertiary header" role="navigation">
             <div class="container-fluid ps-lg-5 pe-lg-5">
-                <a class="navbar-brand order-2 order-md-1" href="/"><img src="images/logo.png" alt="Логотип" class="w-100"
+                <a class="navbar-brand order-2 order-md-1 me-0" href="/"><img src="images/logo.png" alt="Логотип" class="w-100"
                         style="max-width: 250px;"></a>
                 <button class="navbar-toggler order-1 order-md-2 border-0" type="button"
                     data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
@@ -69,7 +69,7 @@
                         @endphp    
                             @if ($el === 1 && $counter < 7)                        
                             <li class="nav-item">
-                                <a class="nav-link btn-custom me-md-2" href="" data-category="{{ $data[$index]->category }}" data-name="{{ $data[$index]->name }}" data-bg="{{ $data[$index]->bg }}" data-width="{{ $data[$index]->width }}" data-height="{{ $data[$index]->height }}">{{ $data[$index]->category }}</a>
+                                <a class="nav-link btn-custom mt-2 me-md-2 mt-md-0" href="" data-category="{{ $data[$index]->category }}" data-name="{{ $data[$index]->name }}" data-bg="{{ $data[$index]->bg }}" data-width="{{ $data[$index]->width }}" data-height="{{ $data[$index]->height }}">{{ $data[$index]->category }}</a>
                             </li>
                             @elseif ($el > 1 && $counter < 7)
                             <li class="nav-item dropdown">
@@ -114,12 +114,12 @@
         </nav>
     </header>        
     <main>
-    <div class="container-fluid" style="height: 80vh;">
-        <div class="row h-100">
+    <div class="container-fluid main">
+        <div class="row h-100 pt-5 pb-5 pt-md-0 pb-md-0">
             <div class="col-12 col-md-6 d-flex p-2">
                 <div class="m-auto">
-                    <h1>Тактические доски <br> для компьютерного спорта</h1>
-                    <p>(работай с командой в режиме реального времени)</p>
+                    <h1 class="text-center text-md-start">Тактические доски <br> для компьютерного спорта</h1>
+                    <p class="text-center text-md-start">(работай с командой в режиме реального времени)</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 d-flex p-2">
@@ -129,16 +129,16 @@
     </div>
     </main>
     <footer>
-        <div class="container-fluid" style="background: rgba(43, 48, 53, 1); height: 10vh;">
+        <div class="container-fluid footer" style="background: rgba(43, 48, 53, 1);">
             <div class="row h-100">
-                <div class="col-12 col-md-6 pt-3 pb-3 d-flex">
+                <div class="col-12 col-md-6 pt-1 pb-1 pt-md-3 pb-md-3 d-flex">
                     <p class='m-auto'>© Copyright Tacticten. All Rights Reserved</p>
                 </div>
-                <div class="col-12 col-md-6  pt-3 pb-3 d-flex">
-                    <div class='m-auto'>
-                        <a href="https://cyberten.ru" target="_blank" title="Cyberten"><img src="/images/cyberten.jpg" alt="cyberten" class="h-100" style="max-height: 32px;"></a>
-                        <a href="https://warmten.ru" target="_blank" title="Warmten"><img src="/images/warmten.jpg" alt="warmten" class="h-100" style="max-height: 32px;"></a>
-                        <a href="https://vk.com/cyberlesgaft" target="_blank" title="VK"><img src="/images/vk.jpg" alt="vk" class="h-100" style="max-height: 32px;"></a>
+                <div class="col-12 col-md-6 pt-1 pb-1 pt-md-3 pb-md-3 d-flex">
+                    <div class='m-auto text-center'>
+                        <a href="https://cyberten.ru" target="_blank" title="Cyberten"><img src="/images/cyberten.jpg" alt="cyberten" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
+                        <a href="https://warmten.ru" target="_blank" title="Warmten"><img src="/images/warmten.jpg" alt="warmten" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
+                        <a href="https://vk.com/cyberlesgaft" target="_blank" title="VK"><img src="/images/vk.jpg" alt="vk" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
                     </div>
                 </div>
             </div>

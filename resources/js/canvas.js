@@ -6,6 +6,13 @@ import * as bootstrap from 'bootstrap';
 
 document.addEventListener('DOMContentLoaded', function() {
 
+    const bsOffcanvas = new bootstrap.Offcanvas('#offcanvasNavbar');
+    const openCanvas = document.querySelector('header .navbar-toggler');
+
+    openCanvas.addEventListener('click', function () {
+        bsOffcanvas.show();
+    });
+
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const tokenID = (+new Date).toString(16);
     let vh = document.documentElement.clientHeight / 100 * 78; 
@@ -99,10 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .then((response) => response.text())
         .then((data) => {
         });
-    }
-
-    function log() {
-        return;
     }
 
     let tools = {

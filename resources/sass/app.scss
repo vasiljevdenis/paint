@@ -50,3 +50,22 @@ font-family: 'Roboto', sans-serif;
 .dropdown-menu>li:hover>.submenu {
     display: block;
 }
+
+@media (min-width: 768px) {
+    .header {
+        height: 10vh;
+    }
+    .main {
+        height: 80vh;
+    }
+    .footer {
+        height: 10vh;
+    }
+}
+
+@media (max-width: 360px) {
+    .navbar-brand img,
+    .navbar-brand {
+        width: 80%;
+    }
+}

@@ -42,7 +42,7 @@
     </head>
     <body data-uniqid="{{ $uniqid }}">
     <header>
-        <nav class="navbar navbar-expand-md bg-body-tertiary" role="navigation" style="height: 10vh">
+        <nav class="navbar navbar-expand-md bg-body-tertiary header" role="navigation">
             <div class="container-fluid ps-lg-5 pe-lg-5">
                 <a class="navbar-brand order-2 order-md-1" href="/"><img src="/images/logo.png" alt="Логотип" class="w-100"
                         style="max-width: 250px;"></a>
@@ -71,10 +71,10 @@
         </nav>
     </header>
     <main>
-        <div class="container-fluid" style="height: 80vh;">
+        <div class="container-fluid main">
             <div class="row h-100">
-                <div class="col-12 col-md-2 d-flex justify-content-center">
-                    <div class="toolbar text-center m-auto">
+                <div class="col-12 col-md-2 d-flex justify-content-center toolbar-wrapper">
+                    <div class="toolbar text-center m-1 m-md-auto">
                     <div class="btn-group mb-2" role="group" aria-label="Basic example">
                         <a class="nav-link btn-custom me-1" style="width: 40px; min-width: auto;" href="/" title="Домой"><i class="bi bi-house-door-fill"></i></a>
                         <a class="nav-link btn-custom" style="width: 40px; min-width: auto;" href="" title="На весь экран" id="fullscreen"><i class="bi bi-arrows-fullscreen"></i></a>
@@ -108,14 +108,14 @@
                         </div>
                     </div><br>
                     <input class="mt-2" type="color" id="color" value="#4079c2"><br>
-                    <label for="zoom" class="form-label mb-0"><small>Масштаб</small></label><br>
-                    <input type="range" class="form-range w-100" id="zoom" min="1" max="5" value="1" step="0.1" style="max-width: 122px;">
+                    <label for="zoom" class="form-label mb-0"><i class="bi bi-zoom-out d-md-none me-4"></i><i class="bi bi-zoom-in d-md-none ms-4"></i><small class="d-none d-md-block">Масштаб</small></label><br>
+                    <input title="Масштаб" type="range" class="form-range w-100" id="zoom" min="1" max="5" value="1" step="0.1" style="max-width: 122px;">
                     <div class="text-center brush-width d-none">
-                    <label for="brush-width" class="form-label mb-0"><small>Ширина кисти</small></label><br>
-                    <input type="range" class="form-range w-100" id="brush-width" min="5" max="50" value="15" step="1" style="max-width: 122px;">
+                    <label for="brush-width" class="form-label mb-0"><i class="bi bi-brush d-md-none me-4"></i><i class="bi bi-brush-fill d-md-none ms-4"></i><small class="d-none d-md-block">Ширина кисти</small></label><br>
+                    <input title="Ширина кисти" type="range" class="form-range w-100" id="brush-width" min="5" max="50" value="15" step="1" style="max-width: 122px;">
                     </div>
-                    <button class="nav-link btn-custom p-2" type="button" id="remove"><small>Удалить объект</small></button>
-                    <button class="nav-link btn-custom p-2 mt-2 ms-auto me-auto" type="button" id="clear"><small>Очистить</small></button>
+                    <button title="Удалить объект" class="nav-link btn-custom p-2" type="button" id="remove"><i class="bi bi-x-lg d-md-none"></i><small class="d-none d-md-block">Удалить объект</small></button>
+                    <button title="Очистить" class="nav-link btn-custom p-2 mt-2 ms-auto me-auto" type="button" id="clear"><i class="bi bi-trash3-fill d-md-none"></i><small class="d-none d-md-block">Очистить</small></button>
                     </div>
                 </div>
                 <div class="col-12 col-md-8 d-flex">
@@ -143,10 +143,17 @@
         </div>
     </main>
     <footer>
-        <div class="container-fluid" style="background: rgba(43, 48, 53, 1); height: 10vh;">
+        <div class="container-fluid footer" style="background: rgba(43, 48, 53, 1);">
             <div class="row h-100">
-                <div class="col-12 pt-3 pb-3 d-flex">
+            <div class="col-12 col-md-6 pt-1 pb-1 pt-md-3 pb-md-3 d-flex">
                     <p class='m-auto'>© Copyright Tacticten. All Rights Reserved</p>
+                </div>
+                <div class="col-12 col-md-6 pt-1 pb-1 pt-md-3 pb-md-3 d-flex">
+                    <div class='m-auto text-center'>
+                        <a href="https://cyberten.ru" target="_blank" title="Cyberten"><img src="/images/cyberten.jpg" alt="cyberten" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
+                        <a href="https://warmten.ru" target="_blank" title="Warmten"><img src="/images/warmten.jpg" alt="warmten" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
+                        <a href="https://vk.com/cyberlesgaft" target="_blank" title="VK"><img src="/images/vk.jpg" alt="vk" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
+                    </div>
                 </div>
             </div>
         </div>
