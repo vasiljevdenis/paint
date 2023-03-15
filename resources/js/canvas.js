@@ -127,7 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
         brushWidth: document.querySelector('#brush-width'),
         clear: document.querySelector('#clear'),
         fullscreen: document.querySelector('#fullscreen'),
-        screen: document.querySelector('#screen')
+        screen: document.querySelector('#screen'),
+        toggler: document.querySelector('#toggler')
     };
 
     let mainTools = document.querySelector('.toolbar .main-tools');
@@ -349,6 +350,21 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.freeDrawingBrush.width = +this.value;
         currentWidth = +this.value;
     });
+    tools.toggler.addEventListener('click', function(e) {
+        e.preventDefault();
+        const toolbar = document.querySelector('.toolbar');
+
+        if (toolbar.classList.contains('d-none')) {
+            toolbar.classList.remove('d-none');
+            this.querySelector('i').classList.remove('bi-caret-down-fill');
+            this.querySelector('i').classList.add('bi-caret-up-fill');
+        } else {
+            toolbar.classList.add('d-none');
+            this.querySelector('i').classList.remove('bi-caret-up-fill');
+            this.querySelector('i').classList.add('bi-caret-down-fill');
+        }        
+    });
+    
 
     tools.download.addEventListener('click', function(e) {
         e.preventDefault();

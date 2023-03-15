@@ -72,8 +72,8 @@
     </header>
     <main>
         <div class="container-fluid main">
-            <div class="row h-100">
-                <div class="col-12 col-md-2 d-flex justify-content-center toolbar-wrapper">
+            <div class="row h-100 position-relative">
+                <div class="col-12 col-md-2 d-flex justify-content-center toolbar-wrapper">                
                     <div class="toolbar text-center m-1 m-md-auto">
                     <div class="btn-group mb-2" role="group" aria-label="Basic example">
                         <a class="nav-link btn-custom me-1" style="width: 40px; min-width: auto;" href="/" title="Домой"><i class="bi bi-house-door-fill"></i></a>
@@ -122,23 +122,7 @@
                     <canvas id="canvas"></canvas>                    
                 </div>
                 <div class="col-12 col-md-2"></div>
-                <div class="modal" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Введите ваше имя</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <input type="text">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Сохранить</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <div class="ps-3 position-absolute top-0 start-0 d-md-none"><a class="nav-link me-1 d-inline-block" href="" title="Панель инструментов" id="toggler"><small>Инструменты <i class="bi bi-caret-down-fill"></i></small></a></div>
             </div>
         </div>
     </main>
