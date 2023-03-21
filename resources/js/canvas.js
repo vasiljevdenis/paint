@@ -44,17 +44,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     function resizeCanvas(clientHeight) {
+        let newHeight;
+        if (document.body.clientWidth <= 768) {
+
+            const containerWidth = document.body.clientWidth - 20;
+
+            const originalWidth = canvas.backgroundImage.width;
+            const originalHeight = canvas.backgroundImage.height;
+
+            const aspectRatio = originalWidth / originalHeight;
+
+            newHeight = containerWidth / aspectRatio;
+        }
         let s = 78;
         if (document.querySelector('main').classList.contains('fullscreen')) {
             s = 98;
         }
         let percent;
         if (clientHeight && typeof clientHeight === 'number') {
-            percent = ((clientHeight - document.documentElement.clientHeight / 100 * s) / clientHeight) * 100;
+            if (document.body.clientWidth <= 768) {
+                percent = ((clientHeight - newHeight) / clientHeight) * 100;
+            } else {
+                percent = ((clientHeight - document.documentElement.clientHeight / 100 * s) / clientHeight) * 100;
+            }
         } else {
-            percent = ((vh - document.documentElement.clientHeight / 100 * s) / vh) * 100;
+            if (document.body.clientWidth <= 768) {
+                percent = ((vh - newHeight) / vh) * 100;
+            } else {
+                percent = ((vh - document.documentElement.clientHeight / 100 * s) / vh) * 100;
+            }
         }
-        vh = document.documentElement.clientHeight / 100 * s;
+        if (document.body.clientWidth > 768) {
+            vh = document.documentElement.clientHeight / 100 * s;
+        } else {
+            vh = newHeight;
+        }
         canvas.discardActiveObject();
         var sel = new fabric.ActiveSelection(canvas.getObjects(), {
           canvas: canvas,

@@ -134,9 +134,9 @@
                 </div>
                 <div class="col-12 col-md-6 pt-1 pb-1 pt-md-3 pb-md-3 d-flex">
                     <div class='m-auto text-center'>
-                        <a href="https://cyberten.ru" target="_blank" title="Cyberten"><img src="/images/cyberten.jpg" alt="cyberten" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
-                        <a href="https://warmten.ru" target="_blank" title="Warmten"><img src="/images/warmten.jpg" alt="warmten" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
-                        <a href="https://vk.com/cyberlesgaft" target="_blank" title="VK"><img src="/images/vk.jpg" alt="vk" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
+                        <a href="https://cyberten.ru" target="_blank" title="Cyberten"><img src="/images/cyberten.png" alt="cyberten" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
+                        <a href="https://warmten.ru" target="_blank" title="Warmten"><img src="/images/warmten.png" alt="warmten" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
+                        <a href="https://vk.com/cyberlesgaft" target="_blank" title="VK"><img src="/images/vk.png" alt="vk" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
                     </div>
                 </div>
             </div>

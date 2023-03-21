@@ -54,4 +54,7 @@ input[type="color"] {
     .toolbar #zoom {
       display: block !important;
     }
+    main {
+      min-height: 80vh;
+    }
 }
