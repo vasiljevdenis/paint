@@ -132,13 +132,13 @@
         <div class="container-fluid footer" style="background: rgba(43, 48, 53, 1);">
             <div class="row h-100">
                 <div class="col-12 col-md-6 pt-1 pb-1 pt-md-3 pb-md-3 d-flex">
-                    <p class='m-auto'>© Copyright Tacticten. All Rights Reserved</p>
+                    <p class='m-auto text-center'><img src="/images/lesgaft.png" alt="Lesgaft" class="me-3" style="width: 8%;"><span>© Copyright Tacticten. All Rights Reserved</span></p>
                 </div>
                 <div class="col-12 col-md-6 pt-1 pb-1 pt-md-3 pb-md-3 d-flex">
                     <div class='m-auto text-center'>
-                        <a href="https://cyberten.ru" target="_blank" title="Cyberten"><img src="/images/cyberten.png" alt="cyberten" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
-                        <a href="https://warmten.ru" target="_blank" title="Warmten"><img src="/images/warmten.png" alt="warmten" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
-                        <a href="https://vk.com/cyberlesgaft" target="_blank" title="VK"><img src="/images/vk.png" alt="vk" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
+                        <a href="https://cyberten.ru" target="_blank"><img data-bs-toggle="tooltip" data-bs-title="Тренажеры для киберспортсменов" src="/images/cyberten.png" alt="cyberten" class="h-100 mt-1 mt-md-0" style="max-height: 62px;"></a>
+                        <a href="https://warmten.ru" target="_blank"><img data-bs-toggle="tooltip" data-bs-title="Разминка для киберспортсменов" src="/images/warmten.png" alt="warmten" class="h-100 mt-1 mt-md-0" style="max-height: 24px;"></a><br class="d-md-none">
+                        <a href="https://vk.com/cyberlesgaft" target="_blank" class="ps-0 ps-md-2"><img data-bs-toggle="tooltip" data-bs-title="Группа Вконтакте" src="/images/vk.png" alt="vk" class="h-100 mt-1 mt-md-0" style="max-height: 32px;"></a>
                     </div>
                 </div>
             </div>

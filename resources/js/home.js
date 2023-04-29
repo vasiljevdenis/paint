@@ -7,10 +7,11 @@ import * as bootstrap from 'bootstrap';
         bsOffcanvas.show();
     });
 
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
     document.addEventListener('DOMContentLoaded', function() {
         const maps = document.querySelectorAll('#maps a:not(.dropdown-toggle)');
-    
-        console.log(maps);
     
         maps.forEach(el => {
             el.addEventListener('click', function(e) {

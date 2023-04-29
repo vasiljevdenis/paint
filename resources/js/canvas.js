@@ -6,6 +6,9 @@ import * as bootstrap from 'bootstrap';
 
 document.addEventListener('DOMContentLoaded', function() {
 
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
     const bsOffcanvas = new bootstrap.Offcanvas('#offcanvasNavbar');
     const openCanvas = document.querySelector('header .navbar-toggler');
 
@@ -28,20 +31,58 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentWidth = 15;
 
     canvas.on({
-        'mouse:down': function(options) {
-        if (options.target && tools.bucket.classList.contains('active')) {
-            if (options.target.type === "path") {
-                options.target.set("stroke", currentColor);
-            } else {
-            options.target.set("fill", currentColor).set("stroke", currentColor);        
+        'mouse:down': function (options) {
+            if (options.target && tools.bucket.classList.contains('active')) {
+                if (options.target.type === "path") {
+                    options.target.set("stroke", currentColor);
+                } else {
+                    options.target.set("fill", currentColor).set("stroke", currentColor);
+                }
+                saveCanvas();
             }
-            saveCanvas();
-        }
-      },
-      'path:created': saveCanvas,
-      'object:modified': saveCanvas
+            let evt = options.e;
+            if (evt.altKey === true) {
+              this.isDragging = true;
+              this.selection = false;
+              this.lastPosX = evt.clientX;
+              this.lastPosY = evt.clientY;
+            }
+        },
+        'mouse:move': function (opt) {
+            if (this.isDragging) {
+                let e = opt.e;
+                let zoom = canvas.getZoom();
+                let vpt = this.viewportTransform;
+                if (zoom < 0.4) {
+                  vpt[4] = 200 - 1000 * zoom / 2;
+                  vpt[5] = 200 - 1000 * zoom / 2;
+                } else {
+                  vpt[4] += e.clientX - this.lastPosX;
+                  vpt[5] += e.clientY - this.lastPosY;
+                  if (vpt[4] >= 0) {
+                    vpt[4] = 0;
+                  } else if (vpt[4] < canvas.getWidth() - canvas.getWidth() * zoom) {
+                    vpt[4] = canvas.getWidth() - canvas.getWidth() * zoom;
+                  }
+                  if (vpt[5] >= 0) {
+                    vpt[5] = 0;
+                  } else if (vpt[5] < canvas.getHeight() - canvas.getHeight() * zoom) {
+                    vpt[5] = canvas.getHeight() - canvas.getHeight() * zoom;
+                  }
+                }
+                this.requestRenderAll();
+                this.lastPosX = e.clientX;
+                this.lastPosY = e.clientY;
+              }
+        },
+        'mouse:up': function (opt) {
+            this.setViewportTransform(this.viewportTransform);
+            this.isDragging = false;
+            this.selection = true;
+        },
+        'path:created': saveCanvas,
+        'object:modified': saveCanvas
     });
-
     
     function resizeCanvas(clientHeight) {
         let newHeight;
@@ -80,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
             vh = newHeight;
         }
         canvas.discardActiveObject();
-        var sel = new fabric.ActiveSelection(canvas.getObjects(), {
+        let sel = new fabric.ActiveSelection(canvas.getObjects(), {
           canvas: canvas,
         });
         canvas.setActiveObject(sel);
@@ -277,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
           saveCanvas();
     });
     tools.hexagon.addEventListener('click', function() {
-        var polygon = new fabric.Polygon([
+        let polygon = new fabric.Polygon([
         { x: 300, y: 150 },
         { x: 225, y: 280 },
         { x: 75, y: 280},
@@ -326,6 +367,15 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('main').classList.add('fullscreen');
         this.classList.add('d-none');
         tools.screen.classList.remove('d-none');
+        let interval = setInterval(() => {            
+            if (document.fullscreenElement === null) {
+                document.querySelector('main').classList.remove('fullscreen');
+                tools.screen.classList.add('d-none');
+                tools.fullscreen.classList.remove('d-none');
+                resizeCanvas();
+                clearInterval(interval);
+            }
+        }, 500);
     });
     tools.screen.addEventListener('click', function(e) {
         e.preventDefault();
@@ -369,6 +419,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     tools.zoom.addEventListener('input', function() {
         canvas.zoomToPoint(new fabric.Point(canvas.width / 2, canvas.height / 2), +this.value);
+        const bsToast = new bootstrap.Toast('#zoomToast');
+        if (+this.value > 1) {
+            bsToast.show();
+        }
+        let zoom = canvas.getZoom();
+        let vpt = canvas.viewportTransform;
+        if (vpt[4] >= 0) {
+            vpt[4] = 0;
+          } else if (vpt[4] < canvas.getWidth() - canvas.getWidth() * zoom) {
+            vpt[4] = canvas.getWidth() - canvas.getWidth() * zoom;
+          }
+          if (vpt[5] >= 0) {
+            vpt[5] = 0;
+          } else if (vpt[5] < canvas.getHeight() - canvas.getHeight() * zoom) {
+            vpt[5] = canvas.getHeight() - canvas.getHeight() * zoom;
+          }
     });
     tools.brushWidth.addEventListener('input', function() {
         canvas.freeDrawingBrush.width = +this.value;
