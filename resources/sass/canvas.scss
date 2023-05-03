@@ -35,7 +35,8 @@ input[type="color"] {
     .toolbar {
         transform: rotate(-90deg) scale(.8);
     }
-    .toolbar i::before {
+    .toolbar i::before,
+    .toolbar svg {
         transform: rotate(90deg);
     }
     .toolbar-wrapper {

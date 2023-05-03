@@ -94,21 +94,27 @@
                                 style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
                                 <button title="Трансформирование" id="cursor" type="button" class="btn btn-dark active"
                                     style="border-bottom-left-radius: 0;"><i class="bi bi-cursor-fill"></i></button>
-                                <button title="Карандаш" id="pencil" type="button" class="btn btn-dark"
-                                    style="border-bottom-right-radius: 0;"><i class="bi bi-pencil-fill"></i></button>
+                                <button title="Перемещение холста" id="drag" type="button" class="btn btn-dark"
+                                    style="border-bottom-right-radius: 0;"><svg style="width: 16px; height: 16px; fill: #fff;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V336c0 1.5 0 3.1 .1 4.6L67.6 283c-16-15.2-41.3-14.6-56.6 1.4s-14.6 41.3 1.4 56.6L124.8 448c43.1 41.1 100.4 64 160 64H304c97.2 0 176-78.8 176-176V128c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V32z"/></svg></button>
                             </div><br>
                             <div class="btn-group" role="group" aria-label="Basic example">
+                                <button title="Карандаш" id="pencil" type="button" class="btn btn-dark rounded-0"><i
+                                        class="bi bi-pencil-fill"></i></button>
+
                                 <button title="Кисть" id="brush" type="button" class="btn btn-dark rounded-0"><i
                                         class="bi bi-brush-fill"></i></button>
-
-                                <button title="Заливка" id="bucket" type="button" class="btn btn-dark rounded-0"><i
-                                        class="bi bi-paint-bucket"></i></button>
                             </div><br>
                             <div class="btn-group" role="group" aria-label="Basic example">
+                                <button title="Заливка" id="bucket" type="button" class="btn btn-dark rounded-0"><i
+                                        class="bi bi-paint-bucket"></i></button>
                                 <button title="Текст" id="text" type="button" class="btn btn-dark rounded-0"><i
                                         class="bi bi-fonts"></i></button>
+                            </div><br>
+                            <div class="btn-group" role="group" aria-label="Basic example">
                                 <button title="Прямая линия" id="line" type="button" class="btn btn-dark rounded-0"><i
                                         class="bi bi-slash-lg"></i></button>
+                                <button title="Звезда" id="star" type="button" class="btn btn-dark rounded-0"><i
+                                        class="bi bi-star-fill"></i></button>
                             </div><br>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button title="Шестиугольник" id="hexagon" type="button"
@@ -155,6 +161,15 @@
                                 class="bi bi-caret-down-fill"></i></small></a></div>
             </div>
         </div>
+        <div class="toast align-items-center position-fixed end-0" style="top: 10vh;" role="alert" aria-live="assertive"
+        aria-atomic="true" id="zoomToast" data-bs-delay="5000">
+        <div class="d-flex">
+            <div class="toast-body">
+                Жми Alt + ЛКМ для перемещения холста
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
     </main>
     <footer>
         <div class="container-fluid footer" style="background: rgba(43, 48, 53, 1);">
@@ -187,16 +202,7 @@
             </div>
             <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-    </div>
-    <div class="toast align-items-center position-fixed end-0" style="top: 10vh;" role="alert" aria-live="assertive"
-        aria-atomic="true" id="zoomToast" data-bs-delay="5000">
-        <div class="d-flex">
-            <div class="toast-body">
-                Жми Alt + ЛКМ для перемещения холста
-            </div>
-            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-    </div>
+    </div>    
     <script type="application/json" id="json">
         {{ $data }}
     </script>

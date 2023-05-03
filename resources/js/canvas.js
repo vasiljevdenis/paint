@@ -31,21 +31,23 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentWidth = 15;
 
     canvas.on({
-        'mouse:down': function (options) {
-            if (options.target && tools.bucket.classList.contains('active')) {
-                if (options.target.type === "path") {
-                    options.target.set("stroke", currentColor);
-                } else {
-                    options.target.set("fill", currentColor).set("stroke", currentColor);
-                }
-                saveCanvas();
-            }
+        'mouse:down': function (options) {            
             let evt = options.e;
-            if (evt.altKey === true) {
+            console.log(evt);
+            if ((evt.altKey === true && !tools.brush.classList.contains('active') && !tools.pencil.classList.contains('active')) || tools.drag.classList.contains('active')) {
               this.isDragging = true;
               this.selection = false;
-              this.lastPosX = evt.clientX;
-              this.lastPosY = evt.clientY;
+              this.lastPosX = evt.clientX ? evt.clientX : evt.touches[0].clientX;
+              this.lastPosY = evt.clientY ? evt.clientY : evt.touches[0].clientY;
+            } else {
+                if (options.target && tools.bucket.classList.contains('active')) {
+                    if (options.target.type === "path") {
+                        options.target.set("stroke", currentColor);
+                    } else {
+                        options.target.set("fill", currentColor).set("stroke", currentColor);
+                    }
+                    saveCanvas();
+                }
             }
         },
         'mouse:move': function (opt) {
@@ -57,8 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   vpt[4] = 200 - 1000 * zoom / 2;
                   vpt[5] = 200 - 1000 * zoom / 2;
                 } else {
-                  vpt[4] += e.clientX - this.lastPosX;
-                  vpt[5] += e.clientY - this.lastPosY;
+                  vpt[4] += (e.clientX ? e.clientX : e.touches[0].clientX) - this.lastPosX;
+                  vpt[5] += (e.clientY ? e.clientY  : e.touches[0].clientY) - this.lastPosY;
                   if (vpt[4] >= 0) {
                     vpt[4] = 0;
                   } else if (vpt[4] < canvas.getWidth() - canvas.getWidth() * zoom) {
@@ -71,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   }
                 }
                 this.requestRenderAll();
-                this.lastPosX = e.clientX;
-                this.lastPosY = e.clientY;
+                this.lastPosX = e.clientX ? e.clientX : e.touches[0].clientX;
+                this.lastPosY = e.clientY ? e.clientY  : e.touches[0].clientY;
               }
         },
         'mouse:up': function (opt) {
@@ -175,6 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let tools = {
         cursor: document.querySelector('#cursor'),
+        drag: document.querySelector('#drag'),
         brush: document.querySelector('#brush'),
         rectangle: document.querySelector('#rectangle'),
         triangle: document.querySelector('#triangle'),
@@ -183,6 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
         text: document.querySelector('#text'),
         line: document.querySelector('#line'),
         hexagon: document.querySelector('#hexagon'),
+        star: document.querySelector('#star'),
         bucket: document.querySelector('#bucket'),
         color: document.querySelector('#color'),
         remove: document.querySelector('#remove'),
@@ -215,6 +219,27 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!this.classList.contains('active')) {
             this.classList.add('active');
         }
+        if (tools.drag.classList.contains('active')) {
+            tools.drag.classList.remove('active');
+        }
+        if (tools.brush.classList.contains('active')) {
+            tools.brush.classList.remove('active');
+        }
+        if (tools.pencil.classList.contains('active')) {
+            tools.pencil.classList.remove('active');
+        }
+        if (tools.bucket.classList.contains('active')) {
+            tools.bucket.classList.remove('active');
+        }    
+    });
+    tools.drag.addEventListener('click', function() {     
+        canvas.isDrawingMode = false;   
+        if (!this.classList.contains('active')) {
+            this.classList.add('active');
+        }
+        if (tools.cursor.classList.contains('active')) {
+            tools.cursor.classList.remove('active');
+        }
         if (tools.brush.classList.contains('active')) {
             tools.brush.classList.remove('active');
         }
@@ -229,6 +254,9 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.isDrawingMode = false;
         if (!this.classList.contains('active')) {
             this.classList.add('active');
+        }
+        if (tools.drag.classList.contains('active')) {
+            tools.drag.classList.remove('active');
         }
         if (tools.brush.classList.contains('active')) {
             tools.brush.classList.remove('active');
@@ -248,6 +276,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!this.classList.contains('active')) {
             this.classList.add('active');
         }
+        if (tools.drag.classList.contains('active')) {
+            tools.drag.classList.remove('active');
+        }
         if (tools.cursor.classList.contains('active')) {
             tools.cursor.classList.remove('active');
         }
@@ -265,6 +296,9 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.isDrawingMode = true;
         if (!this.classList.contains('active')) {
             this.classList.add('active');
+        }
+        if (tools.drag.classList.contains('active')) {
+            tools.drag.classList.remove('active');
         }
         if (tools.cursor.classList.contains('active')) {
             tools.cursor.classList.remove('active');
@@ -325,6 +359,24 @@ document.addEventListener('DOMContentLoaded', function() {
         { x: 0, y: 150},
         { x: 75, y: 20 },
         { x: 225, y: 20 }], {
+            fill: currentColor
+        });
+        canvas.add(polygon);
+        polygon.center();
+        saveCanvas();
+    });
+    tools.star.addEventListener('click', function() {
+        let polygon = new fabric.Polygon([
+            { x: 349.9, y: 75, },
+            { x: 379, y: 160.9,},
+            { x: 469, y: 160.9,},
+            { x: 397, y: 214.9,},
+            { x: 423, y: 300.9,},
+            { x: 350, y: 249.9,},
+            { x: 276.9, y: 301,},
+            { x: 303, y: 215,},
+            { x: 231, y: 161,},
+            { x: 321, y: 161,}], {
             fill: currentColor
         });
         canvas.add(polygon);
@@ -420,7 +472,7 @@ document.addEventListener('DOMContentLoaded', function() {
     tools.zoom.addEventListener('input', function() {
         canvas.zoomToPoint(new fabric.Point(canvas.width / 2, canvas.height / 2), +this.value);
         const bsToast = new bootstrap.Toast('#zoomToast');
-        if (+this.value > 1) {
+        if (+this.value > 1 && document.body.clientWidth > 768) {
             bsToast.show();
         }
         let zoom = canvas.getZoom();
